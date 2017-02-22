@@ -1,3 +1,5 @@
+const VERSION_INCREASE = 1;
+
 require("http").get({
     host: "fontawesome.io",
     path: "/assets/font-awesome/css/font-awesome.min.css"
@@ -8,10 +10,12 @@ require("http").get({
         var version = body.match(/^ \*  Font Awesome ([\d.]+)/m);
         if (!version) { console.log("Couldn't parse version"); return process.exit(1); }
         else version = version[1];
+
+        var packageVersion = version.replace(/\.\d$/, x => "." + (parseInt(x.substr(1)) + VERSION_INCREASE));
         
-        console.log("Font Awesome v" + version);
+        console.log("Font Awesome v" + version + " (package version " + packageVersion + ")");
         var package = require("fs").readFileSync(__dirname + "/package.json").toString();
-        package = package.replace(/(\"version\":\s*\")[\d.]+\"/, "$1"+version+"\"");
+        package = package.replace(/(\"version\":\s*\")[\d.]+\"/, "$1"+packageVersion+"\"");
         require("fs").writeFileSync(__dirname + "/package.json", package);
 
         var fa = "var fa=function(i){return fa[i.replace(/-./g,function(x){return x.substr(1).toUpperCase()})]};"
