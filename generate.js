@@ -1,4 +1,4 @@
-const VERSION_INCREASE = 1;
+const VERSION_INCREASE = 2;
 
 require("http").get({
     host: "fontawesome.io",
@@ -28,7 +28,9 @@ require("http").get({
             icon[0] = icon[0].substr(5).split(/:before,\.fa-/);
             for (var k = 0; k < icon[0].length; k++) {
                 icon[0][k] = icon[0][k].replace(/-./g, function(x) { return x.substr(1).toUpperCase() });
-                fa += "fa." + icon[0][k] + "=\"\\u" + icon[1] + "\";";
+                // fa.500px is not valid JS
+                if (icon[0][k].match(/^[^a-z]/)) fa += "fa[\"" + icon[0][k] + "\"]=\"\\u" + icon[1] + "\";";
+                else fa += "fa." + icon[0][k] + "=\"\\u" + icon[1] + "\";";
             }
             namecount += icon[0].length;
         }
