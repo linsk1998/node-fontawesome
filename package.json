@@ -6,6 +6,7 @@
   "license": "MIT",
 
   "main": "index.js",
+  "module": "index.mjs",
   
   "keywords": [ "fontawesome", "unicode", "icons", "icon", "utf", "character", "font", "awesome" ],
   "repository": { "type": "git", "url": "git+https://github.com/moqmar/node-fontawesome.git" },
